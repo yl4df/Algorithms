@@ -1,0 +1,146 @@
+%---------change this every homework
+\def\yourid{yl4df}
+\def\collabs{list your collaborators}
+\def\sources{Cormen, et al, Introduction to Algorithms~\cite{cormen}}
+% -----------------------------------------------------
+\def\duedate{Tuesday, January 21, 2019 at 11p}
+\def\duelocation{via Collab}
+\def\hnumber{0}
+\def\course{{cs4102 - algorithms - spring 2020}}%------
+%-------------------------------------
+%-------------------------------------
+
+\documentclass[10pt]{article}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[osf]{mathpazo}
+\usepackage{amsmath,amsfonts,graphicx}
+\usepackage{latexsym}
+\usepackage[top=1in,bottom=1.4in,left=1.25in,right=1.25in,centering,letterpaper]{geometry}
+\usepackage{color}
+\definecolor{mdb}{rgb}{0.1,0.6,0.4} 
+\definecolor{cit}{rgb}{0.05,0.2,0.45} 
+\pagestyle{myheadings}
+\markboth{\yourid}{\yourid}
+\usepackage{clrscode}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\newenvironment{proof}{\par\noindent{\it Proof.}\hspace*{1em}}{$\Box$\bigskip}
+\newcommand{\handout}{
+   \renewcommand{\thepage}{Homework \hnumber~-~\arabic{page}}
+   \noindent
+   \begin{center}
+      \vbox{
+    \hbox to \columnwidth {\sc{\course} \hfill}
+    \vspace{-2mm}
+       \hbox to \columnwidth {\sc due \MakeLowercase{\duedate} \duelocation\hfill {\Huge\color{mdb}H\hnumber(\yourid)}}
+      }
+   \end{center}
+   \vspace*{1mm}
+   \hrule
+   \vspace*{1mm}
+    {\footnotesize \textbf{Collaboration Policy:} You are encouraged to collaborate with up to 4 other students, but all work submitted must be your own {\em independently} written solution. List the computing ids of all of your collaborators in the \texttt{collabs} command at the top of the tex file. Do not share written notes, documents (including Google docs, Overleaf docs, discussion notes, PDFs), or code.  Do not seek published or online solutions for any assignments. If you use any published or online resources (which may not include solutions) when completing this assignment, be sure to cite them. Do not submit a solution that you are unable to explain orally to a member of the course staff. Any solutions that share similar text/code will be considered in breach of this policy. Please refer to the syllabus for a complete description of the collaboration policy.
+   \vspace*{1mm}
+    \hrule
+    \vspace*{2mm}
+    \noindent
+    \textbf{Collaborators}: \collabs\\
+    \textbf{Sources}: \sources}
+    \vspace*{2mm}
+    \hrule
+    \vskip 2em
+}
+\newcommand{\solution}[1]{\medskip\noindent\textbf{Solution:}#1}
+\newcommand{\bit}[1]{\{0,1\}^{ #1 }}
+%\dontprintsemicolon
+%\linesnumbered
+\newtheorem{problem}{\sc\color{cit}problem}
+\newtheorem{practice}{\sc\color{cit}practice}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\Z}{\mathbb{Z}} % This might be useful for Integers!
+
+\begin{document}
+\thispagestyle{empty}
+\handout
+
+%----Begin your modifications here
+
+\begin{problem} Proofs \end{problem}
+
+    \noindent Learn how to typset math and construct proofs by reproducing the second proof below. You will need to use the \verb|eqnarray| or \verb|align| environment, as well as the \verb|eqnarray*| or \verb|align*| environment.  Note the reference in red, which should refer correctly to the equation (look up the \verb|ref| command).  The first proof is provided as an example.
+
+\begin{definition}
+    \label{def1}
+A rational number is a fraction $\frac{a}{b}$ where $a$ and $b$ are integers. 
+\end{definition}
+
+\begin{theorem}
+$\sqrt{2}$ is irrational.
+\end{theorem}
+
+\begin{proof}
+    By Contradiction. For a rational number $\frac{a}{b}$, without loss of generality we may suppose that $a$ and $b$ are integers which share no common factors, as otherwise we could remove any common factors (i.e. suppose $\frac{a}{b}$ is in simplest terms). To say $\sqrt{2}$ is irrational is equivalent to stating that $2$ cannot be expressed in the form $(\frac{a}{b})^{2}$. Equivalently, this says that there are no integer values for $a$ and $b$ satisfying
+    \begin{align}
+        \label{eq1}
+        a^2 = 2b^2
+    \end{align}
+
+    Assume toward reaching a contradiction that Equation~\ref{eq1} holds for $a$ and $b$ being integers without any common factor between them. It must be that $a^2$ is even, since $2b^2$ is divisible by $2$, therefore $a$ is even. If $a$ is even, then for some integer $c$
+    \begin{align*}
+        a &= 2c \\
+        a^2 &= (2c)^2 \\
+        2b^2 &= 4c^2 \\
+        b^2 &= 2c^2
+    \end{align*}
+    \noindent therefore, $b$ is even. This implies that $a$ and $b$ are both even, and thus share a common factor of $2$. This contradicts our hypothesis, therefore our hypothesis is false. 
+\end{proof}
+
+\begin{theorem}
+    If $n \in \Z$ is a non-prime integer with $n>1$, then $2^n - 1$ is not prime~\cite{velleman}.
+\end{theorem}
+
+\begin{proof}
+    Direct Proof. Since $n$ is not prime, $\exists a, b \in \Z$ such that $a < n$ and $b < n$ and $n = ab$. Let
+    \begin{align*}
+        x &= 2^b -1
+    \end{align*}
+    and
+    \begin{align*}
+        y &= 1 + 2^b + 2^{2b} + ... + 2^{(a-1)b}.
+    \end{align*}
+    Then,
+    \begin{align}
+        \label{eq2}
+        xy &= (2^b -1)(1 + 2^b + 2^{2b} + ... + 2^{(a-1)b})\\
+        \label{eq3}
+           &= 2^b(1 + 2^b + 2^{2b} + ... + 2^{(a-1)b}) - (1 + 2^b + 2^{2b} + ... + 2^{(a-1)b})\\
+        \label{eq4}
+           &= 2^{ab}-1\\
+        \label{eq5}
+           &= 2^n -1
+    \end{align}
+    Since $b < n$, then $x = 2^b - 1 < 2^n - 1$. Likewise, since $ab = n > a$, we know that $b > 1$ and $x = 2^b - 1 > 2 - 1 = 1$. Therefore, $y < xy = 2^n - 1$ and $2^n - 1$ can be written as the multiplication of $x and $y by Equation~\ref{eq5}. Therefore $2n - 1$ is not prime.
+\end{proof}
+
+\begin{problem} Passages \end{problem}
+    Include a passage from \textbf{your} favorite book, including a citation.  You will need to update the \verb|bibliography.bib| file and include it in your submission zip. Note that your references will be numbered in alphabetical order.
+    \begin{quote}
+    “Now I will tell you the answer to my question. It is this. The Party seeks power entirely for its own sake. We are not interested in the good of others; we are interested solely in power, pure power. What pure power means you will understand presently. We are different from the oligarchies of the past in that we know what we are doing. All the others, even those who resembled ourselves, were cowards and hypocrites. The German Nazis and the Russian Communists came very close to us in their methods, but they never had the courage to recognize their own motives. They pretended, perhaps they even believed, that they had seized power unwillingly and for a limited time, and that just around the corner there lay a paradise where human beings would be free and equal. We are not like that. We know that no one ever seizes power with the intention of relinquishing it. Power is not a means; it is an end. One does not establish a dictatorship in order to safeguard a revolution; one makes the revolution in order to establish the dictatorship. The object of persecution is persecution. The object of torture is torture. The object of power is power. Now you begin to understand me." ~\cite{orwell}
+    \end{quote}
+
+
+\begin{problem} Sketchings \end{problem}
+Learn how to include drawings in your documents with the \verb|\includegraphics{file}| command by submitting a caricature of professor Horton or professor Hott.
+
+\includegraphics[width=0.2\textwidth]{image/caricature.png}
+
+
+
+% Bibliography
+\bibliographystyle{plain}
+\bibliography{bibliography}
+\end{document}
+

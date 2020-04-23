@@ -1,0 +1,218 @@
+%---------change this every homework
+\def\yourid{yl4df}
+\def\collabs{mw5ew}
+\def\sources{Cormen, et al, Introduction to Algorithms}
+% NOTE: To specifically cite your sources, include your bibliography.bib file from
+% homework 0 when LaTeXing your document (or upload it to Overleaf with this document)
+% and then uncomment the penultimate last two lines of this file to display the
+% bibliography.
+% -----------------------------------------------------
+\def\duedate{Thursday, February 6  at 11p}
+\def\duelocation{via Collab}
+\def\hnumber{2}
+\def\course{{cs4102 - algorithms - spring 2020}}%------
+%-------------------------------------
+%-------------------------------------
+
+\documentclass[10pt]{article}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[osf]{mathpazo}
+\usepackage{amsmath,amsfonts,graphicx}
+\usepackage{latexsym}
+\usepackage[top=1in,bottom=1.4in,left=1.25in,right=1.25in,centering,letterpaper]{geometry}
+\usepackage{color}
+\definecolor{mdb}{rgb}{0.1,0.6,0.4} 
+\definecolor{cit}{rgb}{0.05,0.2,0.45} 
+\pagestyle{myheadings}
+\markboth{\yourid}{\yourid}
+\usepackage{clrscode}
+\usepackage{url}
+\usepackage{tabularx,booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\newenvironment{proof}{\par\noindent{\it Proof.}\hspace*{1em}}{$\Box$\bigskip}
+\newcommand{\handout}{
+   \renewcommand{\thepage}{Homework \hnumber~-~\arabic{page}}
+   \noindent
+   \begin{center}
+      \vbox{
+    \hbox to \columnwidth {\sc{\course} \hfill}
+    \vspace{-2mm}
+       \hbox to \columnwidth {\sc due \MakeLowercase{\duedate} \duelocation\hfill {\Huge\color{mdb}H\hnumber(\yourid)}}
+      }
+   \end{center}
+   \vspace*{1mm}
+   \hrule
+   \vspace*{1mm}
+    {\footnotesize \textbf{Collaboration Policy:} You are encouraged to collaborate with up to 4 other students, but all work submitted must be your own {\em independently} written solution. List the computing ids of all of your collaborators in the \texttt{collabs} command at the top of the tex file. Do not share written notes, documents (including Google docs, Overleaf docs, discussion notes, PDFs), or code.  Do not seek published or online solutions for any assignments. If you use any published or online resources (which may not include solutions) when completing this assignment, be sure to cite them. Do not submit a solution that you are unable to explain orally to a member of the course staff. Any solutions that share similar text/code will be considered in breach of this policy. Please refer to the syllabus for a complete description of the collaboration policy.
+   \vspace*{1mm}
+    \hrule
+    \vspace*{2mm}
+    \noindent
+    \textbf{Collaborators}: \collabs\\
+    \textbf{Sources}: \sources}
+    \vspace*{2mm}
+    \hrule
+    \vskip 2em
+}
+\newcommand{\solution}[1]{\medskip\noindent\textbf{Solution:}#1}
+\newcommand{\bit}[1]{\{0,1\}^{ #1 }}
+%\dontprintsemicolon
+%\linesnumbered
+\newtheorem{problem}{\sc\color{cit}problem}
+\newtheorem{practice}{\sc\color{cit}practice}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\Z}{\mathbb{Z}} % This might be useful for Integers!
+
+\begin{document}
+\thispagestyle{empty}
+\handout
+
+%----Begin your modifications here
+
+% ------ new problem ---------------------------------------------------------------------------------
+\begin{problem} Logs \end{problem}
+Prove that $\log n \in o(n^\varepsilon)$ for any positive constant $\varepsilon > 0$.  That is, $\log n$ grows more slowly than any polynomial, even those with fractional powers, e.g., $\varepsilon = 0.00001$.
+(Note: you may find the limit definitions of the order-classes (CLRS, pp.~50-51) helpful for this problem.)
+\begin{proof}
+Assume $\varepsilon$ is an arbitrary positive constant. By using L'Hospital's rule, we have 
+\begin{align}
+    \lim_{n \to \infty} \frac{\log n}{n^\varepsilon} = \lim_{n \to \infty} \frac{\frac{1}{n\ln{2}}}{\varepsilon n^{\varepsilon-1}}=\lim_{n \to \infty} \frac{1}{\varepsilon \cdot \ln{2} \cdot n^\varepsilon}=\frac{1}{\varepsilon \cdot \ln{2}}\lim_{n \to \infty} \frac{1}{n^\varepsilon}.
+\end{align}
+Since $\varepsilon$ is positive, $n^\varepsilon$ converges to $\infty$ as $n$ goes $\infty$, so the limit above converges to $0$. By applying the limit definitions of the order-classes, we conclude $\log n \in o(n^\varepsilon)$.
+\end{proof}
+
+\vspace*{.25in} % here's how you add some vertical spacing!  Take this out if you don't want it.
+
+% ------ new problem ---------------------------------------------------------------------------------
+\begin{problem} Master Theorem \end{problem}
+    Prove a $\Theta$ asymptotic bound on the following recurrences using the Master Theorem.  Be sure to state which case and why that case applies in your proof. If the Master Theorem does not apply, explain why it fails. (Note: you may need to use substitution before applying the Master Theorem.)
+
+\begin{enumerate}
+    \item $T(n) = 6 T(n/2) + n^2$
+    \begin{proof}
+    We apply Case 1. $a=6$, $b=2$ and let $\varepsilon=0.5$. Then we have $\log_b a - \varepsilon \approx 2.08$ and thus $f(n)=n^2 \in O(n^{\log_b a - \varepsilon})$. By Master Theorem, we conclude $T(n) \in \Theta (n^{\log_2 6})$.
+    \end{proof}
+    \item $T(n) = 27 T(n/3) + n^3$
+    \begin{proof}
+    We apply Case 2. $a=27$ and $b=3$. Then $\log_b a = 3$ and thus $f(n)=n^3 \in \Theta(n^{\log_b a})$. By Master Theorem, we conclude $T(n) \in \Theta (n^3\log n$).
+    \end{proof}
+    \item $T(n) = 4 T(n/2) + n^2 \log n$
+    \begin{proof}
+    The Master Theorem does not apply. $a=4$ and $b=2$, so $\log_b a = 2$. Clearly, $n^2 \log n \not\in \Theta(n^{\log_b a})$. From Problem 1, we know that $\log n \in o(n^\varepsilon)$ for any positive constant $\varepsilon > 0$. This implies that for any positive constant $\varepsilon > 0$, $n^2 \log n \not\in O(n^{\log_b a-\varepsilon})$ and $n^2 \log n \not\in \Omega(n^{\log_b a+\varepsilon})$. Therefore, all 3 cases fail.
+    \end{proof}
+    \item $T(n) = 9T(n/3) + n^2\sqrt{n}$
+    \begin{proof}
+    We apply Case 3. $a=9$, $b=3$ and $\varepsilon=0.5$. Then $\log_b a +\varepsilon = 2.5$ and thus $f(n)=n^2\sqrt{n} \in \Omega(n^{\log_b a +\varepsilon})$. There exists $c=0.6$, for all sufficiently large $n$, such that $9\cdot(\frac{n}{3})^2\sqrt{\frac{n}{3}} \leq c\cdot n^2\sqrt{n}$. By Master Theorem, we conclude $T(n) \in \Theta(n^2\sqrt{n})$.
+    \end{proof}
+    \item $T(n) = 3 T(n/9) + \sqrt{n}$
+    \begin{proof}
+    We apply Case 2. $a=3$ and $b=9$. Then $\log_b a = \frac{1}{2}$ and thus $f(n)=\sqrt{n} \in \Theta(n^{\log_b a})$. By Master Theorem, we conclude $T(n) \in \Theta (\sqrt{n}\log n$).
+    \end{proof}
+    \item $T(n) = 2 T(\sqrt{n}) + 2$ 
+    \begin{proof}
+    We apply substitution at first by letting $n=2^m$. Then we rewrite the equation as $T(2^m)=2T(2^{\frac{m}{2}})+2$. Then let $S(m)=T(2^m)$, so we have $S(m)=2S(\frac{m}{2})+2$. We apply Case 1 on $S(m)$. It follows that $a=2$ and $b=2$. Let $\varepsilon=0.5$. This implies $\log_b a-\varepsilon=0.5$. Then we have $2 \in O(m^{\log_b a-\varepsilon})$, so $S(m)=\Theta(m)$ by Master Theorem. Then we substitute $n$ back and thus we have $T(n)=\Theta(\log_2 n)$
+    \end{proof}
+\end{enumerate}
+
+\vspace*{.25in} % here's how you add some vertical spacing!  Take this out if you don't want it.
+
+% ------ new problem ---------------------------------------------------------------------------------
+\begin{problem} Fast Exponentiation \end{problem}
+Given a pair of positive integers $(a,n)$, give pseudo-code for a divide and conquer algorithm that computes $a^n$ using only $O(\log n)$ multiplications.  Prove that your algorithm is $\in O(\log n)$.\\
+\\
+Pseudo-code for power $(a, n)$:\\
+If $n=0$, then the algorithm returns $1$;\\
+If $n=1$, then the algorithm returns $a$;\\
+Declare a variable to store value of power $(a, \lfloor \frac{n}{2} \rfloor)$. Call it temp.\\
+If $n$ is a multiple of $2$, then the algorithm returns temp $\cdot$ temp;\\
+Else, the algorithm returns a $\cdot$ temp $\cdot$ temp;\\
+The algorithm divides $a$ by $2$ and take $1$ or $2$ multiplications in each step, so we have 
+\begin{align}
+    T(n)=T(\frac{n}{2})+ c 
+\end{align}
+where $c$ is $1$ or $2$. Then we use induction to prove $T(n) \leq c\log n\in O(\log n)$.
+\begin{proof}
+Base Case: $T(1)=0\leq c \log 1$.\\
+Hypothesis: $\forall x_0 \leq n$, $T(n) \leq c\log n$.\\
+Inductive Step: 
+\begin{align}
+    T(x_0+1)&=T(\frac{x_0+1}{2})+c\\
+            &\leq c \log_2 {\frac{x_0+1}{2}}+c\\
+            &\leq c \log_2 (x_0+1) -c + c\\
+            &\leq c \log_2 (x_0+1)\\
+\end{align}
+Therefore, $T(n) \leq c\log n \in O(\log n)$.
+\end{proof}
+
+ \newpage
+
+% ------ new problem ---------------------------------------------------------------------------------
+\begin{problem} Castle Hunter \end{problem}
+    We are planning a new board game called \textit{Castle Hunter}. This game works similarly to \textit{Battleship}, except instead of trying to find your opponent's ships on a two dimensional board, you're trying to find and destroy a castle in your opponent's one dimensional board.  Each player will decide the layout of their terrain; castles are placed on every hill.  Specifically, each castle is placed such that they are higher than the surrounding area, i.e., they are on a local maximum.  (After all, hilltops are easier to defend!)  Each player's board will be a list of $n$ floating point values corresponding to the elevation. To guarantee that a local maximum exists somewhere in each player's list, we will force the first two elements in the list to be (in order) $0$ and $1$, and the last two elements to be (in order) $1$ and $0$. 
+
+To make progress, you name an index of your opponent's list, and she/he must respond with the value stored at that index (i.e., the elevation of the terrain). To win you must correctly identify that a particular index is a local maximum (the first and last elements don't count); i.e., find \emph{one} castle. An example board is shown in Figure~\ref{fig:board}. [We will require that all values in the list, excepting the first and last pairs, be unique.]
+
+\begin{figure}[h]
+    \centering
+        \begin{tabularx}{0.7\textwidth}{ | *{10}{Y|} }
+                \hline
+                  &   &   &    &    &    &    &    &   & \\
+                0 & 1 & 4 & 23 & 18 & 14 & 15 & 13 & 1 & 0\\
+                  &   &   &    &    &    &    &    &   & \\
+                \hline
+        \end{tabularx}
+        {\small\begin{tabularx}{0.7\textwidth}{  *{10}{Y} }
+                0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9
+        \end{tabularx}}
+
+    \caption{An example board of size $n=10$. You win if you can identify any one local maximum (a castle); in this case both index $3$ and index $6$ are local maxima.}
+    \label{fig:board}
+\end{figure}
+
+\begin{enumerate}
+    \item Devise a strategy which will guarantee that you can find a local maximum in your opponent's board using no more than $O(\log n)$ queries, prove your run time and correctness.\\
+    \\
+    Strategy:\\
+    Step 1: Find the middle index of the board by $k=\lceil \frac{t-s}{2} \rceil$ where $t$ is the last index and $s$ is the first index. Then query the number at index $k$, $k-1$, and $k+1$ and compare. \\
+    Step 2: \\
+    Case 1: If the number at index $k$ is a maximum among the three number, then we're done.\\
+    Case 2: If the number at index $k-1$ is a maximum among the three number, then we let $t=k-1$ and repeat the strategy from Step 1.\\
+    Case 3: If the number at index $k+1$ is a maximum among the three number, then we let $s=k+1$ and repeat the strategy from Step 1.\\
+    For each time, we divide the board by 2 and perform 3 queries, so we have 
+    \begin{align}
+    T(n)=T(\frac{n}{2})+3.
+    \end{align}
+    Then we prove $T(n) \leq 3\log n \in O(\log n)$ and correctness.\\
+    \begin{proof}
+    Run time:\\
+    Base Case: The board should at least contains 5 elements according to the requirement, so we use size 5 as our base case. When $n=5$, we can finish the game by 3 or 6 queries, so $T(5) \leq 3\log 5$.\\
+    Hypothesis: $\forall x_0 \leq n$, $T(n) \leq 3\log n$.\\
+    Inductive Step: 
+    \begin{align}
+        T(x_0+1)&=T(\frac{x_0+1}{2})+3\\
+                &=3\log (\frac{x_0+1}{2})+3\\
+                &=3\log (x_0+1)-3+3\\
+                &=3\log(x_0+1)
+    \end{align}
+    Therefore, $T(n) \leq 3\log n \in O(\log n)$.\\
+    Correctness:\\
+    For Case 1, if the middle element is bigger than the other two, then our goal is fulfilled. 
+    For Case 2 and 3, they can be proved in the same way with opposite side. Without loss of generality, let's consider Case 2. When the left element (index $k-1$) is bigger, this implies that the left element (index $k-1$) could be a local maximum. If it is, then our strategy will work. If it is not, then its left element (index $k-2$) could be a local maximum. Following this idea, from the middle to the left, there is a growing-up trend. The trend will always end up, because the first two elements are 0 and 1 and no duplicate. As long as the trend ends up, there is a local maximum, so our strategy works for Case 2. Similarly, for Case 3, when the right element (index $k+1$) is bigger, this implies that the right element (index $k+1$) could be a local maximum. If it is, then our strategy will work. If it is not, then its right element (index $k+2$) could be a local maximum. Following this idea, from the middle to the right, there is a growing-up trend. The trend will always end up, because the last two elements are 1 and 0 and no duplicate. As long as the trend ends up, there is a local maximum, so our strategy works for Case 3.
+    \end{proof}
+    
+    \item Now show that $\Omega(\log n)$ queries are required by \emph{any} algorithm (in the worst case). To do this, show that there is a way that your opponent could dynamically select values for each query as you ask them, rather than in advance (i.e., cheat, that scoundrel!) in such a way that $\Omega(\log n)$ queries are required by \emph{any} guessing strategy you might use.
+    \begin{proof}
+    First, there is one castle in opponent's array. Then no matter what algorithm that we take, the opponent can always give a sequence consisting of three monotonic numbers. As we know, the array will be divided every time when we query, so the opponent can always put the castle in the longer sub-array by providing corresponding monotonicity. The monotonicity will lure us to reach the last number available in the array. This means we at least need $3\log n$ queries, so $\Omega(\log n)$ queries are required by \emph{any} algorithm (in the worst case).
+    \end{proof}
+\end{enumerate}
+
+
+% Bibliography - uncomment the next two lines to cite your sources!
+%\bibliographystyle{plain}
+%\bibliography{bibliography}
+\end{document}
+
